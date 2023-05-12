@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: auth
+spec:
+  replicas: 1  # number of replicas to deploy
+  selector:
+    matchLabels:
+      app: auth
+  template:
+    metadata:
+      labels:
+        app: auth
+    spec:
+      serviceAccountName: auth-sa
+      containers:
+        - name: auth
+          image: alotaibidev/auth  # replace with your Docker image
+          ports:
+            - name: auth-svc
+              containerPort: 80 # specify the port your microservice listens on
+          # livenessProbe:
+          #   httpGet:
+          #     path: /_health
+          #     port: 80
+          #   initialDelaySeconds: 10
+          #   periodSeconds: 5
+          # readinessProbe:
+          #   httpGet:
+          #     path: /_health
+          #     port: 80
+          #   initialDelaySeconds: 10
+          #   periodSeconds: 5
+          resources:
+            requests:
+              memory: "64Mi"
+              cpu: "250m"
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
+          env:
+            - name: MY_ENV_VAR
+              value: "my-value"  # add any environment variables your microservice requires
+          # specify any other configuration options your microservice requires
