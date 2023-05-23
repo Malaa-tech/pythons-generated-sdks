@@ -5,9 +5,7 @@ ENV PATH=$GOPATH/bin:/usr/local/go/bin:$PATH
 
 RUN apt-get update && \
     apt-get install -y curl && \
-    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" && \
-    echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> /root/.bashrc && \
-    eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)" && \
-    brew install openapi-generator
+    curl -o /usr/local/bin/openapi-generator https://repo1.maven.org/maven2/org/openapitools/openapi-generator-cli/5.3.0/openapi-generator-cli-5.3.0.jar && \
+    chmod +x /usr/local/bin/openapi-generator
 
 WORKDIR /
