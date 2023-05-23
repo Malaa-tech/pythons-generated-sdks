@@ -26,5 +26,6 @@ jobs:
         run: |
           docker build -t gen-sdk -f ./images/sdk.Dockerfile .
       - name: Generate Python Client SDKs
-        run: |
+        run: | 
+          sudo chmod -R 777 /home/runner/work/pythons-generated-sdks/pythons-generated-sdks/images &&
           docker run --rm -v $PWD/repos:/repos -w /repos gen-sdk task generate-sdks
