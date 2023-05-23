@@ -13,7 +13,7 @@ tags_metadata = [
 ]
 
 app = FastAPI(
-    title="FastAPI SDK Example",
+    title="FastAPI SDK Exampleeee",
     description="This is an example of how to use the FastAPI SDK",
     version="0.1.0") # Here is the versioning
 

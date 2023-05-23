@@ -24,7 +24,6 @@ jobs:
 
       - name: Build Docker image
         run: | 
-          ls -a && 
           docker build -t gen-sdk -f sdk.Dockerfile .
       - name: Generate Python Client SDKs
         run: | 
