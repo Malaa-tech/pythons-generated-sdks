@@ -23,9 +23,9 @@ jobs:
             ${{ runner.os }}-buildx-
 
       - name: Build Docker image
-        run: |
-          docker build -t gen-sdk -f ./images/sdk.Dockerfile .
+        run: | 
+          ls -a && 
+          docker build -t gen-sdk -f sdk.Dockerfile .
       - name: Generate Python Client SDKs
         run: | 
-          sudo chmod -R 777 /home/runner/work/pythons-generated-sdks/pythons-generated-sdks/images &&
-          docker run --rm -v $PWD/repos:/repos -w /repos gen-sdk task generate-sdks
+          docker run --rm -v $PWD -w /sdks gen-sdk task generate-sdks
