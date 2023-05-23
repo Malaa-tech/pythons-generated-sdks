@@ -26,7 +26,7 @@ jobs:
         run: |
           docker build \
             --cache-from=type=local,src=/tmp/.buildx-cache \
-            --cache-to=type=local,dest=/tmp/.buildx-cache \
+            dest=/tmp/.buildx-cache \
             -t gen-sdk \
             -f ./images/sdk.Dockerfile .
 
