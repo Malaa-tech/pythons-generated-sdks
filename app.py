@@ -13,7 +13,7 @@ tags_metadata = [
 ]
 
 app = FastAPI(
-    title="FastAPI SDK Exampleeee",
+    title="FastAPI SDK Exampleeees",
     description="This is an example of how to use the FastAPI SDK",
     version="0.1.0") # Here is the versioning
 
@@ -23,5 +23,5 @@ def read_item(item_id: int, query_param: str = None):
 
 openapi_schema = app.openapi()
 
-with open('spec.yaml', 'w') as yaml_file:
+with open('repos/spec.yaml', 'w') as yaml_file:
     yaml.dump(openapi_schema, yaml_file)
