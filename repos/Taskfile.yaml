@@ -63,7 +63,8 @@ tasks:
       - docker volume rm $(docker volume ls -q) # Delete all volumes
       - docker network rm $(docker network ls -q) # Delete all networks
 
-   generate-sdks:
+
+  generate-sdks:
     desc: Watch the openapi_spec.yaml file for changes and regenerate sdk
     summary: |
       This task will watch the openapi_spec.yaml file for changes and regenerate auth sdk
