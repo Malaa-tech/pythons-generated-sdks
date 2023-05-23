@@ -1,4 +1,4 @@
-FROM ubuntu-latest
+FROM ubuntu
 
 ENV GOPATH=/go
 ENV PATH=$GOPATH/bin:/usr/local/go/bin:/root/.task/bin:$PATH
