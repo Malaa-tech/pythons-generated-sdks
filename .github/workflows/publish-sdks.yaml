@@ -28,4 +28,4 @@ jobs:
           docker build -t gen-sdk -f sdk.Dockerfile .
       - name: Generate Python Client SDKs
         run: | 
-          docker run --rm -v $PWD -w gen-sdk task generate-sdks
+          docker run --rm -v $PWD:/repos -w /repos gen-sdk task generate-sdks
