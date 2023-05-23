@@ -1,4 +1,5 @@
-name: Generate Python Client SDKs
+name: Generate SDKs on Merge with Staging
+
 on:
   push:
     branches:
@@ -17,7 +18,7 @@ jobs:
         uses: actions/cache@v2
         with:
           path: /tmp/.buildx-cache
-          key: ${{ runner.os }}-buildx-${{ github.sha }}-${{ hashFiles('.*Dockerfile') }}
+          key: ${{ runner.os }}-buildx-${{ github.sha }}
           restore-keys: |
             ${{ runner.os }}-buildx-
 
