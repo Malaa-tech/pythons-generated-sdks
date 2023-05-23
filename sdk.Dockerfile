@@ -1,4 +1,4 @@
-FROM golang:1.17
+FROM ubuntu-latest
 
 ENV GOPATH=/go
 ENV PATH=$GOPATH/bin:/usr/local/go/bin:/root/.task/bin:$PATH
