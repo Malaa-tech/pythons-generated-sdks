@@ -74,6 +74,5 @@ tasks:
     cmds:
       - rm -rf sdks/auth_sdk_"{{.AUTH_SDK_VERSION}}" || true # To avoid error if folder doesn't exist
       - openapi-generator generate -i spec.yaml -g python -o sdks --package-name auth_sdk_"{{.AUTH_SDK_VERSION}}" --skip-validate-spec
-    silent: true
     sources:
       - spec.yaml
