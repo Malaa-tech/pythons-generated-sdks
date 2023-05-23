@@ -1,0 +1,37 @@
+name: Generate SDKs on Merge with Staging
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'repos/**'
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Cache Docker layers
+        uses: actions/cache@v2
+        with:
+          path: /tmp/.buildx-cache
+          key: ${{ runner.os }}-buildx-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-buildx-
+
+      - name: Build Docker image
+        run: |
+          docker build \
+            --cache-from=type=local,src=/tmp/.buildx-cache \
+            --cache-to=type=local,dest=/tmp/.buildx-cache \
+            -t gen-sdk \
+            -f ./images/sdk.Dockerfile .
+
+      - name: Generate Python Client SDKs
+        run: |
+          docker run --rm -v $PWD/repos:/repos -w /repos gen-sdk task generate-sdks

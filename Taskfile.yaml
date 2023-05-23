@@ -1,0 +1,78 @@
+version: '3.7'
+
+vars:
+  AUTH_SDK_VERSION: v1beta
+
+tasks:
+
+  setup-machine:
+    desc: "Setting up local machine with all dependencies needed such as brew"
+    summary: |
+      This task will setup local machine with all dependencies needed such as brew
+    cmds:
+      - chmod +x ./scripts/setup-machine.sh
+      - ./scripts/setup-machine.sh
+
+  start-cluster:
+    desc: "Starting local k8s cluster"
+    summary: |
+      This task will start kubernetes local cluster which will host all of our deployments (containers for simplicity),
+      notes:
+      - For now we are only using Minikube as an option
+      - If you did 'docker ps', and saw only 1 container running that's fine,
+        it's the Minikube VM and all containers deployed inside it
+    cmds:
+      - minikube start # Start Minikube if it's not already running
+      - eval $(minikube docker-env) # Use Minikube's Docker daemon
+
+  run:
+    desc: "Running Malaa's backend services"
+    cmds:
+      - kubectl config use-context minikube # Use Minikube's context
+      - skaffold dev --wait-for-deletions=false --verbosity=debug --port-forward   # Deploy with Skaffold
+
+  remove-docker-not-used-resources:
+    aliases: ["docker-prune"]
+    desc: "Removing not used resources"
+    summary: |
+      Automatically removes all resources not associated with a container.
+      This is a quick way to get rid of old Docker images, containers, volumes, and networks
+    cmds:
+    - docker system prune -a -f
+
+  cleanup-machine:
+    desc: "Removing all dependencies that has been installed (use it with caution) 🔴"
+    summary: |
+      This task will remove all dependencies that has been installed
+    deps:
+      - sh -c "read -p 'Are you sure you want to remove all dependencies that has been installed? (y/n) ' -n 1 -r; echo; if [[ ! \$REPLY =~ ^[Yy]$ ]]; then exit 1; fi"
+    cmds:
+      - minikube delete # Delete Minikube cluster
+      - rm -rf ~/.minikube # Delete Minikube local configuration
+      - rm -rf ~/.kube # Delete Kubernetes local configuration
+      - rm -rf ~/.helm # Delete Helm local configuration
+      - rm -rf ~/.docker # Delete Docker local configuration
+
+  cleanup-docker:
+    desc: "Removing EVERYTHING related to Docker (use it with caution) 🔴"
+    summary: |
+      This task will delete all containers
+    cmds:
+      - docker rm -f $(docker ps -aq) # Delete all containers
+      - docker rmi -f $(docker images -q) # Delete all images
+      - docker volume rm $(docker volume ls -q) # Delete all volumes
+      - docker network rm $(docker network ls -q) # Delete all networks
+
+   generate-sdks:
+    desc: Watch the openapi_spec.yaml file for changes and regenerate sdk
+    summary: |
+      This task will watch the openapi_spec.yaml file for changes and regenerate auth sdk
+      Notes:
+        - Use -w flag to watch for changes
+        - 💡 Change the AUTH_SDK_VERSION variable to change the sdk version (v1beta is the default)
+    cmds:
+      - rm -rf sdks/auth_sdk_"{{.AUTH_SDK_VERSION}}" || true # To avoid error if folder doesn't exist
+      - openapi-generator generate -i spec.yaml -g python -o sdks --package-name auth_sdk_"{{.AUTH_SDK_VERSION}}" --skip-validate-spec
+    silent: true
+    sources:
+      - spec.yaml
