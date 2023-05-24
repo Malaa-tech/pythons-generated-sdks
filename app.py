@@ -14,7 +14,7 @@ tags_metadata = [
 
 app = FastAPI(
     title="FastAPI SDK Exampleeees",
-    description="This is an example of how to use the FastAPI SDK",
+    description="This is an exsssample of how to use the FastAPI SDK",
     version="0.1.0") # Here is the versioning
 
 @app.get('/items/{item_id}', operation_id="GetItem")

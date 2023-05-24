@@ -31,7 +31,7 @@ components:
       title: ValidationError
       type: object
 info:
-  description: This is an example of how to use the FastAPI SDK
+  description: This is an exsssample of how to use the FastAPI SDK
   title: FastAPI SDK Exampleeees
   version: 0.1.0
 openapi: 3.0.2
