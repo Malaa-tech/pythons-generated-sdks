@@ -73,6 +73,6 @@ tasks:
         - 💡 Change the AUTH_SDK_VERSION variable to change the sdk version (v1beta is the default)
     cmds:
       - rm -rf sdks/auth_sdk_"{{.AUTH_SDK_VERSION}}" || true # To avoid error if folder doesn't exist
-      - openapi-generator generate -i spec.yaml -g python -o sdks --package-name auth_sdk_"{{.AUTH_SDK_VERSION}}" --skip-validate-spec
+      - openapi-generator-cli generate -i spec.yaml -g python -o sdks --package-name auth_sdk_"{{.AUTH_SDK_VERSION}}" --skip-validate-spec
     sources:
       - spec.yaml

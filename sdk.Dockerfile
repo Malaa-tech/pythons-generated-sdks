@@ -5,10 +5,8 @@ ENV PATH=$GOPATH/bin:/usr/local/go/bin:/root/.task/bin:$PATH
 
 RUN apt-get update && \
     apt-get install -y curl && \
+    apt-get install -y curl openjdk-8-jre-headless && \
     curl -sL https://taskfile.dev/install.sh | sh && \
-    npm install @openapitools/openapi-generator-cli -g
+    npm install -g @openapitools/openapi-generator-cli     
 
-RUN alias openapi-generator='openapi-generator-cli'
-
-
-WORKDIR /
+WORKDIR app
