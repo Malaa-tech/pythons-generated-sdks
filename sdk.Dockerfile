@@ -8,4 +8,7 @@ RUN apt-get update && \
     curl -sL https://taskfile.dev/install.sh | sh && \
     npm install @openapitools/openapi-generator-cli -g
 
+RUN alias openapi-generator='openapi-generator-cli'
+
+
 WORKDIR /
