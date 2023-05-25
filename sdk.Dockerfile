@@ -7,5 +7,3 @@ RUN apt-get update && \
     apt-get install -y curl default-jre && \
     curl -sL https://taskfile.dev/install.sh | sh && \
     npm install -g @openapitools/openapi-generator-cli     
-
-WORKDIR app

@@ -3,7 +3,7 @@ components:
     HTTPValidationError:
       properties:
         detail:
-          items:
+          items: ##
             $ref: '#/components/schemas/ValidationError'
           title: Detail
           type: array
